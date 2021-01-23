@@ -4,6 +4,13 @@ $(document).ready(function(){
     var interval;
     var timeLeft = 10;
     var score = 0;
+    var limit = 10;
+
+    $(document).on('change', '#number-limit', function () {
+      var currentLimit = $('#number-limit').val();
+      $('#current-number-limit').text(currentLimit);
+      limit = currentLimit;
+    });
     
     var updateTimeLeft = function (amount) {
       timeLeft += amount;
@@ -18,6 +25,7 @@ $(document).ready(function(){
     var updateHighScore = function (score) {
       if (score > highScore) {
         $('#high-score').text(score);
+        highScore = score;
       }
     }
     
@@ -54,9 +62,11 @@ $(document).ready(function(){
     
     var questionGenerator = function () {
       var question = {};
-      var num1 = randomNumberGenerator(10);
-      var num2 = randomNumberGenerator(10);
+      var num1 = randomNumberGenerator(limit);
+      var num2 = randomNumberGenerator(limit);
       var operator = randomOperatorGenerator();
+
+      question.equation = String(num1) + " " + String(operator) + " " + String(num2);
 
       if (operator == "+") {
         question.answer = num1 + num2;
@@ -65,10 +75,20 @@ $(document).ready(function(){
       } else if (operator == "*") {
         question.answer = num1 * num2;
       } else {
-        question.answer = num1 / num2;
+        if (num1 >= num2) {
+          while (num1 % num2 != 0) {
+            num1 = randomNumberGenerator(limit);
+          }
+          question.equation = String(num1) + " " + String(operator) + " " + String(num2);
+          question.answer = num1 / num2;
+        } else {
+          while (num2 % num1 != 0) {
+            num2 = randomNumberGenerator(limit);
+          }
+          question.answer = num2 / num1;
+          question.equation = String(num2) + " " + String(operator) + " " + String(num1);
+        }
       }
-      
-      question.equation = String(num1) + " " + String(operator) + " " + String(num2);
       
       return question;
     };
