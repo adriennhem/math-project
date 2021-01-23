@@ -1,3 +1,19 @@
 .main-content {
     text-align: center;
 }
+
+.math-game {
+    padding-top: 100px;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#current-number-limit {
+    margin-top: 20px;
+}
+
+input[type=range] {
+    max-width: 200px;
+    margin: 0 auto;
+}
