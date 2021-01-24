@@ -76,20 +76,23 @@ $(document).ready(function(){
         question.answer = num1 * num2;
       } else {
         if (num1 >= num2) {
-          while (num1 % num2 != 0) {
-            num1 = randomNumberGenerator(limit);
+          if (num1 % num2 != 0) {
+            num1 = num1 * num2;
+            question.answer = num1 / num2;
+          } else {
+            question.answer = num1 / num2;
           }
           question.equation = String(num1) + " " + String(operator) + " " + String(num2);
-          question.answer = num1 / num2;
         } else {
-          while (num2 % num1 != 0) {
-            num2 = randomNumberGenerator(limit);
+          if (num2 % num1 != 0) {
+            num2 = num1 * num2;
+            question.answer = num2 / num1;
+          } else {
+            question.answer = num2 / num1;
           }
-          question.answer = num2 / num1;
           question.equation = String(num2) + " " + String(operator) + " " + String(num1);
         }
       }
-      
       return question;
     };
     
